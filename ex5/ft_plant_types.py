@@ -2,19 +2,39 @@ class Plant:
     def __init__(self, name: str, height: float,
                  days: int, growth_rate: float) -> None:
         self.name = name
-        self.height = height
-        self.days = days
+        self._height = height
+        self._days = days
         self.growth_rate = growth_rate
+
+    def get_age(self) -> int:
+        return self._days
+
+    def get_height(self) -> float:
+        return self._height
+
+    def set_age(self, new_days: int) -> None:
+        if new_days >= 0:
+            self._days = new_days
+        else:
+            print(f"{self.name}: "
+                  "Error, age can't be negative\nAge update rejected\n")
+
+    def set_height(self, new_height: float) -> None:
+        if new_height >= 0:
+            self._height = new_height
+        else:
+            print(f"{self.name}: "
+                  "Error, height can't be negative\nHeight update rejected")
 
     def show(self) -> None:
         print(f"{self.name}: "
-              f"{self.height} cm, {self.days} days old")
+              f"{self.get_height()} cm, {self.get_age()} days old")
 
     def grow(self) -> None:
-        self.height = round(self.height + self.growth_rate, 1)
+        self.set_height(round(self.get_height() + self.growth_rate, 1))
 
     def age(self) -> None:
-        self.days += 1
+        self.set_age(self.get_age() + 1)
 
 
 class Flower(Plant):
@@ -50,7 +70,7 @@ class Tree(Plant):
     def produce_shade(self) -> None:
         print(f"[asking the {self.name} to produce shade]")
         print(f"{self.name} now produces a shade of "
-              f"{self.height}cm long and {self.trunk_diameter}cm wide.\n")
+              f"{self.get_height()}cm long and {self.trunk_diameter}cm wide.\n")
 
 
 class Vegetable(Plant):
